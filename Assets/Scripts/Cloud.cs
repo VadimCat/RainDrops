@@ -58,21 +58,20 @@ public class Cloud : MonoBehaviour {
     }
     public IEnumerator Animat()     //SPAWN
     {
-        
-            yield return new WaitForSeconds(2);
-        {        
-            float x = (float)Random.Range(3000, 5000) / 1000;
-            float y = (float)Random.Range(3000, 5000) / 1000;
-            transform.Translate(x*Time.deltaTime, y* Time.deltaTime, 0);
-        }
-
-        yield return new WaitForSeconds(2);
+        while (true)
         {
+            float x = (float)Random.Range(3f, 8f);
+            float y = (float)Random.Range(3f, 8f);
+            yield return new WaitForSeconds(2);
+            {
+                transform.Translate(x * Time.deltaTime, y * Time.deltaTime, 0);
+            }
 
-            float x = (float)Random.Range(1000, 3000) / 1000;
-            float y = (float)Random.Range(1000, 3000) / 1000;
-            transform.Translate(-x * Time.deltaTime, -y * Time.deltaTime, 0);
-            StartCoroutine(animcour);
+            yield return new WaitForSeconds(2);
+            {
+                transform.Translate(-x * Time.deltaTime, -y * Time.deltaTime, 0);
+            //    StartCoroutine(animcour);
+            }
         }
     }
 
