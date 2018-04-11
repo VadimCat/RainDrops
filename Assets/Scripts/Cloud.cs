@@ -7,7 +7,8 @@ public class Cloud : MonoBehaviour {
     public Transform spawnTransorm;
     public GameObject Rain, Poison, SnowFlake;
     private MainScript mainscript;
-    private IEnumerator coroutine;                               
+    private IEnumerator coroutine;
+    private IEnumerator animcour;
     float i = 0.5f;
     int type, f=0;
 
@@ -17,7 +18,9 @@ public class Cloud : MonoBehaviour {
         i = 0.5f;
         mainscript = GameObject.Find("MAIN").GetComponent<MainScript>();
         coroutine = Spawn(i);
-        StartCoroutine(coroutine);                            
+        animcour = Animat();
+        StartCoroutine(coroutine);
+        StartCoroutine(animcour);
     }
     
     // Update is called once per frame
@@ -27,11 +30,11 @@ public class Cloud : MonoBehaviour {
     }
     public IEnumerator Spawn(float delay)     //SPAWN
     {
-        while (true)                                                    
+        while (true)
         {
             yield return new WaitForSeconds(delay);
             {
-                type = Random.Range(0, 100);                               
+                type = Random.Range(0, 100);
                 if ((type >= 0) && (type <= 60))
                 {
                     Instantiate(Rain, spawnTransorm.position + new Vector3((Random.Range(10, 550) - 270) / 100f, 0), Quaternion.identity);
@@ -53,5 +56,24 @@ public class Cloud : MonoBehaviour {
             }
         }
     }
-    
+    public IEnumerator Animat()     //SPAWN
+    {
+        
+            yield return new WaitForSeconds(2);
+        {        
+            float x = (float)Random.Range(3000, 5000) / 1000;
+            float y = (float)Random.Range(3000, 5000) / 1000;
+            transform.Translate(x*Time.deltaTime, y* Time.deltaTime, 0);
+        }
+
+        yield return new WaitForSeconds(2);
+        {
+
+            float x = (float)Random.Range(1000, 3000) / 1000;
+            float y = (float)Random.Range(1000, 3000) / 1000;
+            transform.Translate(-x * Time.deltaTime, -y * Time.deltaTime, 0);
+            StartCoroutine(animcour);
+        }
+    }
+
 }
