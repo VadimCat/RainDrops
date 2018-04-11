@@ -7,26 +7,25 @@ public class Cloud : MonoBehaviour {
     public Transform spawnTransorm;
     public GameObject Rain, Poison, SnowFlake;
     private MainScript mainscript;
-    private IEnumerator coroutine;
-    private IEnumerator animcour;
     float i = 0.5f;
     int type, f=0;
-
+    float x;
+    float y;
     
     // Use this for initialization
     void Start () {
         i = 0.5f;
         mainscript = GameObject.Find("MAIN").GetComponent<MainScript>();
-        coroutine = Spawn(i);
-        animcour = Animat();
-        StartCoroutine(coroutine);
-        StartCoroutine(animcour);
+        StartCoroutine(Spawn(i));
+        StartCoroutine(Animat());
     }
     
+
     // Update is called once per frame
     void Update ()
-    {                                                                      
-
+    {
+        transform.Translate(x * Time.deltaTime, y * Time.deltaTime, 0);
+            //transform.Translate(-x * Time.deltaTime, -y * Time.deltaTime, 0);
     }
     public IEnumerator Spawn(float delay)     //SPAWN
     {
@@ -60,17 +59,15 @@ public class Cloud : MonoBehaviour {
     {
         while (true)
         {
-            float x = (float)Random.Range(3f, 8f);
-            float y = (float)Random.Range(3f, 8f);
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1.5f);
             {
-                transform.Translate(x * Time.deltaTime, y * Time.deltaTime, 0);
+                x = (float)Random.Range(-0.5f, 0.5f);
+                y = (float)Random.Range(-0.5f, 0.5f);
             }
-
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1f);
             {
-                transform.Translate(-x * Time.deltaTime, -y * Time.deltaTime, 0);
-            //    StartCoroutine(animcour);
+                x *=-1;
+                y *=-1;
             }
         }
     }
